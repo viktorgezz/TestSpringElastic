@@ -2,11 +2,9 @@ package com.example.springelastictest.controller;
 
 import com.example.springelastictest.services.EsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -26,5 +24,20 @@ public class ApiController {
         String id = UUID.randomUUID().toString();
         esService.updateQuestion(id, question, answer);
         return id;
+    }
+
+    @GetMapping("/search/{field}")
+    public List<EsService.QuestionEntity> search(@PathVariable("field") String field) {
+        return esService.search(field);
+    }
+
+    @GetMapping("/get_all")
+    public List<EsService.QuestionEntity> matchAll() {
+        return esService.getAllQuestions();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteQuestion(@PathVariable("id") String id) {
+        esService.deleteQuestionById(id);
     }
 }
