@@ -26,6 +26,7 @@ public class EsService {
 
     public static class QuestionEntity {
 
+        private String id;
         private String question;
         private String answer;
 
@@ -43,6 +44,14 @@ public class EsService {
 
         public void setAnswer(String answer) {
             this.answer = answer;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
     }
 
@@ -124,6 +133,7 @@ public class EsService {
             Map<String, Object> sourceAsMap = hit.getSourceAsMap();
 
             QuestionEntity questionEntity = new QuestionEntity();
+            questionEntity.setId(hit.getId());
             questionEntity.setQuestion((String) sourceAsMap.get("question"));
             questionEntity.setAnswer((String) sourceAsMap.get("answer"));
             questionEntities.add(questionEntity);
